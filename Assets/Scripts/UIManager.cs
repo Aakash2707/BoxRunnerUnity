@@ -30,6 +30,9 @@ public class UIManager : MonoBehaviour
     }
     public void GameStart(){
         SceneManager.LoadScene(1);
+    }    
+    public void InvitePeople(){
+        SceneManager.LoadScene(3);
     }
     public void QuitGame(){
         Application.Quit();
