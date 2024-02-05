@@ -33,8 +33,28 @@ public class AddressBookUI : MonoBehaviour
             
             if(contact.EmailAddresses.Length == 0 ){
                 contactEntry.transform.GetChild(2).gameObject.SetActive(false);
+                
+            }
+            else{
+                Button inviteButton = contactEntry.GetComponentInChildren<Button>();
+                inviteButton.onClick.AddListener(() => SendInvitation(contact.EmailAddresses[0]));
             }
         }
+    }
+    void SendInvitation(string emailAddress)
+    {
+        bool canSendMail = MailComposer.CanSendMail();
+        if(canSendMail)
+        {
+            MailComposer composer = MailComposer.CreateInstance();
+            composer.SetToRecipients(emailAddress);
+            composer.SetSubject("Play Box Runner");
+            composer.SetBody("Challenge An endless Runner Game to unlock Skins and create High score", false);//Pass true if string is html content
+            composer.SetCompletionCallback((result, error) => {
+            Debug.Log("Mail composer was closed. Result code: " + result.ResultCode);});
+            composer.Show(); 
+            
+        }   
     }
 
     public void MainMenu()
